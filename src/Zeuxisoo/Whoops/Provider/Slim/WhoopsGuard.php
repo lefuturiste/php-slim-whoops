@@ -45,7 +45,15 @@ class WhoopsGuard {
         if (isset($settings['debug']) === true && $settings['debug'] === true) {
             // Enable PrettyPageHandler with editor options
             $prettyPageHandler = new PrettyPageHandler();
+            
+            foreach ($_ENV as $key => $value){
+				$prettyPageHandler->blacklist('_ENV', $key);
+			}
 
+			foreach ($_SERVER as $key => $value){
+				$prettyPageHandler->blacklist('_SERVER', $key);
+			}
+            
             if (empty($settings['whoops.editor']) === false) {
                 $prettyPageHandler->setEditor($settings['whoops.editor']);
             }
